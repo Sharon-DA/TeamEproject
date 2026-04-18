@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { Upload, Calendar, Video, ArrowUpRight, BookOpen, Award, Star, ChevronRight } from 'lucide-react';
+import { Upload, Calendar, Video, ArrowUpRight, BookOpen, Award, Star, ChevronRight, Cpu, Sparkles } from 'lucide-react';
 
 const CareerCenter = () => {
+    const navigate = useNavigate();
     const [cvUploaded, setCvUploaded] = useState(false);
 
     return (
@@ -33,34 +35,29 @@ const CareerCenter = () => {
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                    {/* CV Upload */}
-                    <div className="bg-white p-10 rounded-[40px] border-3 border-black shadow-brutalist space-y-8">
+                    {/* CV Upload / AI Link */}
+                    <div className="bg-white p-10 rounded-[40px] border-3 border-black shadow-brutalist space-y-8 text-left">
                         <div className="flex justify-between items-center">
-                            <h3 className="text-2xl font-black text-nile-white uppercase">CV Enhancer .</h3>
-                            <div className="w-12 h-12 bg-nile-green text-nile-white rounded-2xl border-3 border-black shadow-brutalist-sm flex items-center justify-center">
-                                <BookOpen size={22} strokeWidth={2.5} />
+                            <h3 className="text-2xl font-black text-black uppercase tracking-tighter">AI Architect .</h3>
+                            <div className="w-12 h-12 bg-nile-green text-white rounded-2xl border-3 border-black shadow-brutalist-sm flex items-center justify-center">
+                                <Cpu size={22} strokeWidth={2.5} />
                             </div>
                         </div>
                         <div
-                            onClick={() => setCvUploaded(true)}
-                            className="aspect-video border-3 border-black border-dashed rounded-[30px] flex flex-col items-center justify-center space-y-4 cursor-pointer hover:bg-nile-white/50 transition-colors"
+                            onClick={() => navigate('/student/career/ai')}
+                            className="aspect-video border-3 border-black border-dashed rounded-[30px] flex flex-col items-center justify-center space-y-4 cursor-pointer md:hover:bg-nile-green/10 transition-all group"
                         >
-                            {cvUploaded ? (
-                                <>
-                                    <Award size={48} strokeWidth={2} className="text-nile-green" />
-                                    <p className="font-black uppercase text-nile-green">CV_UPLOADED.PDF</p>
-                                    <p className="text-xs font-bold text-nile-blue/70 uppercase">CLICK TO REPLACE</p>
-                                </>
-                            ) : (
-                                <>
-                                    <Upload size={48} strokeWidth={2} className="text-nile-blue/50" />
-                                    <p className="font-black uppercase text-nile-blue/70">DRAG & DROP YOUR CV</p>
-                                    <p className="text-xs font-bold text-nile-blue/70 uppercase">PDF, DOCX UP TO 5MB</p>
-                                </>
-                            )}
+                            <Sparkles size={48} strokeWidth={2} className="text-nile-blue/50 group-hover:text-nile-green group-hover:scale-110 transition-all" />
+                            <div className="text-center">
+                                <p className="font-black uppercase text-black">Scan & Evolve</p>
+                                <p className="text-[10px] font-black text-nile-blue/30 uppercase tracking-[0.2em] mt-1">AI-Powered Career Mapping</p>
+                            </div>
                         </div>
-                        <button className="w-full bg-nile-green text-white font-black py-5 rounded-full border-3 border-black shadow-brutalist-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase">
-                            ANALYSE CV
+                        <button 
+                            onClick={() => navigate('/student/career/ai')}
+                            className="w-full bg-nile-green text-white font-black py-5 rounded-full border-3 border-black shadow-brutalist-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase lg:text-sm"
+                        >
+                            LAUNCH NEURAL ANALYSIS
                         </button>
                     </div>
 

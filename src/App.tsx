@@ -34,6 +34,7 @@ import ProfileStudent from './pages/student/Profile';
 import Network from './pages/student/Network';
 import Messages from './pages/student/Messages';
 import EditProfileStudent from './pages/student/EditProfile';
+import AICounselor from './pages/student/AICounselor';
 
 // Staff Section
 import StaffDashboard from './pages/staff/Dashboard';
@@ -90,6 +91,7 @@ const App = () => {
                             <Route path="jobs" element={<JobBoardStudent />} />
                             <Route path="jobs/:id" element={<JobDetailStudent />} />
                             <Route path="career" element={<CareerCenter />} />
+                            <Route path="career/ai" element={<AICounselor />} />
                             <Route path="applications" element={<ApplicationTracker />} />
                             <Route path="events" element={<EventsCalendar />} />
                             <Route path="profile" element={<ProfileStudent />} />
