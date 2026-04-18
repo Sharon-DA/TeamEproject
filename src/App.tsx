@@ -44,6 +44,7 @@ import StaffJobs from './pages/staff/Jobs';
 import StaffServices from './pages/staff/Services';
 import StaffProfile from './pages/staff/Profile';
 import StaffMessages from './pages/staff/Messages';
+import StaffSettings from './pages/staff/Settings';
 
 // Employer Section
 import EmployerDashboard from './pages/employer/Dashboard';
@@ -55,6 +56,7 @@ import FeedEmployer from './pages/employer/Feed';
 import EmployerEvents from './pages/employer/Events';
 import EmployerProfile from './pages/employer/Profile';
 import EmployerMessages from './pages/employer/Messages';
+import EmployerSettings from './pages/employer/Settings';
 
 // Helper: wraps elements with page transition
 const T = ({ children }: { children: React.ReactNode }) => (
@@ -109,6 +111,7 @@ const App = () => {
                             <Route path="services" element={<StaffServices />} />
                             <Route path="profile" element={<StaffProfile />} />
                             <Route path="messages" element={<StaffMessages />} />
+                            <Route path="settings" element={<StaffSettings />} />
                         </Route>
 
                         {/* --- NESTED EMPLOYER ROUTES --- */}
@@ -122,6 +125,7 @@ const App = () => {
                             <Route path="events" element={<EmployerEvents />} />
                             <Route path="profile" element={<EmployerProfile />} />
                             <Route path="messages" element={<EmployerMessages />} />
+                            <Route path="settings" element={<EmployerSettings />} />
                         </Route>
 
                         {/* --- FALLBACK --- */}
