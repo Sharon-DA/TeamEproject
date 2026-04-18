@@ -26,11 +26,11 @@ const StudentDashboard = () => {
     if (isLoading) {
         return (
             <DashboardLayout>
-                <div className="p-6 space-y-6 animate-pulse">
+                <div className="p-4 md:p-6 space-y-6 animate-pulse">
                     <div className="h-32 bg-black/5 rounded-[24px]"></div>
-                    <div className="grid grid-cols-12 gap-6">
-                        <div className="col-span-8 space-y-6"><div className="h-[500px] bg-black/5 rounded-[24px]"></div></div>
-                        <div className="col-span-4 space-y-6"><div className="h-64 bg-black/5 rounded-[24px]"></div></div>
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <div className="md:col-span-8 space-y-6"><div className="h-64 md:h-[500px] bg-black/5 rounded-[24px]"></div></div>
+                        <div className="md:col-span-4 space-y-6"><div className="h-64 bg-black/5 rounded-[24px]"></div></div>
                     </div>
                 </div>
             </DashboardLayout>
@@ -39,26 +39,26 @@ const StudentDashboard = () => {
 
     return (
         <DashboardLayout>
-            <div className="p-6 space-y-8 anime-fade-in font-sans max-w-6xl mx-auto">
+            <div className="p-4 md:p-6 space-y-6 md:space-y-8 anime-fade-in font-sans max-w-6xl mx-auto">
                 
-                {/* 1. Dashboard Hero: Compact */}
-                <section className="bg-white border-[2px] border-black rounded-[24px] shadow-[6px_6px_0px_0px_#1E499D] p-8 flex flex-col md:flex-row items-center justify-between relative overflow-hidden group">
+                {/* 1. Dashboard Hero: Responsive */}
+                <section className="bg-white border-[2px] border-black rounded-[24px] shadow-[4px_4px_0px_0px_#1E499D] md:shadow-[6px_6px_0px_0px_#1E499D] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-1/4 h-full bg-nile-blue/5 -skew-x-12 translate-x-1/2"></div>
                     
-                    <div className="space-y-4 max-w-xl z-10 text-left">
+                    <div className="space-y-3 md:space-y-4 max-w-xl z-10 text-left w-full md:w-auto">
                         <div className="flex items-center space-x-2">
                              <div className="pulse-green"></div>
-                            <span className="text-[9px] font-black text-nile-blue uppercase tracking-widest">LIVE SESSION OVERVIEW</span>
+                            <span className="text-[8px] md:text-[9px] font-black text-nile-blue uppercase tracking-widest">LIVE SESSION OVERVIEW</span>
                         </div>
-                        <h2 className="text-4xl font-black text-black leading-none uppercase tracking-tighter">
+                        <h2 className="text-2xl md:text-4xl font-black text-black leading-none uppercase tracking-tighter">
                             Hi, <span className="text-nile-blue">{firstName}</span>
                         </h2>
-                        <p className="text-sm font-bold text-nile-blue/70 leading-snug uppercase max-w-sm">
+                        <p className="text-xs md:text-sm font-bold text-nile-blue/70 leading-snug uppercase max-w-sm">
                             Your network grew by <span className="text-nile-green">12%</span>. <span className="underline">3 tasks</span> pending.
                         </p>
                         <div className="flex space-x-3 pt-1">
-                             <Button onClick={() => navigate('/student/applications')} size="sm">Review tasks</Button>
-                             <Button variant="outline" size="sm" onClick={() => navigate('/student/profile')}>Profile</Button>
+                             <Button onClick={() => navigate('/student/applications')} size="xs md:sm">Tasks</Button>
+                             <Button variant="outline" size="xs md:sm" onClick={() => navigate('/student/profile')}>Profile</Button>
                         </div>
                     </div>
 
@@ -77,22 +77,22 @@ const StudentDashboard = () => {
                     </div>
                 </section>
 
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-10">
                     
                     {/* Left: Engagement */}
                     <div className="xl:col-span-8 space-y-8">
-                         <div className="p-1.5 border-2 border-black border-dashed rounded-[20px] bg-nile-white/40">
+                         <div className="p-1 border-2 border-black border-dashed rounded-[20px] bg-nile-white/40">
                              <PostBar onPostClick={() => setPostModalOpen(true)} />
                          </div>
                          
                          <div className="space-y-4">
                             <div className="flex items-center justify-between px-1">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.15em] flex items-center">
+                                <h3 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] flex items-center">
                                     <ArrowUpRight size={14} className="mr-2 text-nile-green" /> CATCH UP ON FEED
                                 </h3>
-                                <button className="text-[9px] font-black text-nile-blue hover:underline uppercase" onClick={() => navigate('/student/feed')}>VIEW ALL</button>
+                                <button className="text-[8px] md:text-[9px] font-black text-nile-blue hover:underline uppercase" onClick={() => navigate('/student/feed')}>VIEW ALL</button>
                             </div>
-                            <div className="max-w-xl mx-auto xl:mx-0">
+                            <div className="max-w-2xl mx-auto xl:mx-0">
                                 <Feed />
                             </div>
                          </div>
