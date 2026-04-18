@@ -1,0 +1,16 @@
+name: "NileConnect Security Config"
+
+paths-ignore:
+  - '**/node_modules/**'
+  - '**/dist/**'
+  - '**/public/**'
+  - '**/*.test.ts'
+  - '**/*.test.tsx'
+  - '**/playwright-report/**'
+  - 'colors.cjs'
+  - 'update_colors.cjs'
+  - 'postcss.config.js'
+  - 'tailwind.config.js'
+
+queries:
+  - uses: security-and-quality

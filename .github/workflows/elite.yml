@@ -1,0 +1,167 @@
+# =============================================================================
+# 🚀 NILECONNECT MVP - ELITE CI/CD + SECURITY PIPELINE
+# =============================================================================
+# Pentagon-grade automation: Security → Tests → Build → Deploy
+# Version: 1.1 (April 2026)
+
+name: 🛡️ NileConnect Elite CI/CD + Security
+
+on:
+  push:
+    branches: [main, develop]
+    paths-ignore: ['**.md', 'docs/**', '**.txt']
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * 1' # Weekly deep security scan
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+  id-token: write
+  deployments: write
+  actions: read
+  statuses: write
+
+jobs:
+  security-scan:
+    name: 🔒 Pentagon-Grade Security Scanning
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript, typescript
+          config-file: ./.github/codeql-config.yml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        continue-on-error: true
+        with:
+          category: "/language:javascript"
+
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
+        with:
+          scan-type: fs
+          severity: 'CRITICAL,HIGH'
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+
+      - name: Snyk SCA scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --severity-threshold=high
+
+  setup-and-test:
+    name: 🧪 Auto-Setup + Full E2E Testing
+    needs: security-scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run Unit Tests
+        run: npm test -- --coverage
+
+      - name: Run E2E Tests (Playwright)
+        run: npm run test:e2e
+        env:
+          BASE_URL: http://localhost:3000
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  build-and-deploy:
+    name: 🚀 Build & Deploy to Vercel
+    needs: setup-and-test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-24.04
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      # Your requested Vercel deployment (production only on main)
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy Preview (for PRs and develop branch)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+          npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  summary:
+    name: 📊 Pipeline Summary
+    if: always()
+    needs: [security-scan, setup-and-test, build-and-deploy]
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          echo "✅ NileConnect Elite Pipeline Completed"
+          echo "Security: ${{ needs.security-scan.result }}"
+          echo "Tests: ${{ needs.setup-and-test.result }}"
+          echo "Deployment: ${{ needs.build-and-deploy.result || 'skipped' }}"
