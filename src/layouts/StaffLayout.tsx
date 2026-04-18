@@ -151,7 +151,7 @@ const StaffLayout = () => {
                     </div>
 
                     <div className="flex items-center space-x-2 md:space-x-4">
-                         <button className="hidden sm:block p-2 text-black/40 hover:text-black transition-colors"><Mail size={18} /></button>
+                         <button onClick={() => navigate('/staff/messages')} className={`${location.pathname.startsWith('/staff/messages') ? 'text-black' : 'text-black/40 hover:text-black'} hidden sm:block p-2 transition-colors`}><Mail size={18} /></button>
                          <button onClick={() => setShowNotifications(!showNotifications)} className={`p-2 transition-all relative ${showNotifications ? 'text-black' : 'text-black/40 hover:text-black'}`}><Bell size={18} /></button>
                          {showNotifications && (
                             <div className="absolute top-full right-4 md:right-8 mt-2 z-50 animate-in fade-in slide-in-from-top-1 scale-95 origin-top-right">
