@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { Mail, Download, ExternalLink, Edit2, MapPin, GraduationCap, Briefcase, Plus, Link2 } from 'lucide-react';
+import { Mail, Download, ExternalLink, Edit2, MapPin, GraduationCap, Briefcase, Plus, Link2, LogOut } from 'lucide-react';
 import Avatar from '../../components/Avatar';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/Button';
@@ -15,7 +15,7 @@ const experience = [
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     
     const userName = user?.name || 'USER';
     const userRole = user?.type === 'alumni' ? "Alumni • Class of 2024" : "Computer Science • Nile University";
@@ -151,6 +151,21 @@ const Profile = () => {
                                 <ContactRow icon={<ExternalLink size={14} strokeWidth={3} />} label="github/gracestanley" />
                             </div>
                         </SectionCard>
+
+                        {/* Log Out - Mobile Specific Visibility Focus */}
+                        <div className="pt-4">
+                            <Button 
+                                variant="outline" 
+                                fullWidth 
+                                className="border-red-500/20 text-red-500 hover:bg-red-50 hover:border-red-500 shadow-[4px_4px_0px_0px_rgba(239,68,68,0.1)]"
+                                onClick={() => {
+                                    logout();
+                                    navigate('/login');
+                                }}
+                            >
+                                <LogOut size={16} className="mr-2" /> LOG OUT OF NILECONNECT
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
