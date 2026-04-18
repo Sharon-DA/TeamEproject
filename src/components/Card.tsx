@@ -19,11 +19,11 @@ const Card: React.FC<CardProps> = ({ title, children, className = '', variant = 
     return (
         <div className={`${baseStyles} ${variants[variant]} ${className}`}>
             {title && (
-                <div className="px-6 pt-6 pb-3 border-b-[2px] border-black/5">
-                    <h3 className="text-[11px] font-black text-black uppercase tracking-[0.1em]">{title}</h3>
+                <div className="px-4 md:px-6 pt-4 md:pt-6 pb-2 md:pb-3 border-b-[2px] border-black/5">
+                    <h3 className="text-[9px] md:text-[11px] font-black text-black uppercase tracking-[0.1em]">{title}</h3>
                 </div>
             )}
-            <div className={title ? "p-6 pt-3" : "p-6"}>
+            <div className={title ? "p-4 md:p-6 pt-2 md:pt-3" : "p-4 md:p-6"}>
                 {children}
             </div>
         </div>

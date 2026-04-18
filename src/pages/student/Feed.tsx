@@ -11,19 +11,19 @@ const StudentFeed = () => {
 
     return (
         <DashboardLayout>
-            <div className="max-w-4xl mx-auto py-12 px-6 space-y-12 anime-fade-in font-sans bg-nile-white min-h-full">
+            <div className="max-w-4xl mx-auto py-6 md:py-12 px-4 md:px-6 space-y-8 md:space-y-12 anime-fade-in font-sans bg-nile-white min-h-full">
                 {/* Header Section */}
-                <div className="flex justify-between items-end mb-16">
-                    <div className="flex items-center space-x-6 group">
-                        <div className="w-16 h-16 bg-nile-blue rounded-[20px] flex items-center justify-center text-white shadow-brutalist-sm-green group-hover:rotate-6 transition-transform">
-                            <MessageCircle size={32} strokeWidth={2.5} />
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6 sm:gap-0 mb-8 md:mb-16">
+                    <div className="flex items-center space-x-4 md:space-x-6 group">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-nile-blue rounded-[16px] md:rounded-[20px] flex items-center justify-center text-white shadow-brutalist-sm-green group-hover:rotate-6 transition-transform">
+                            <MessageCircle size={24} md:size={32} strokeWidth={2.5} />
                         </div>
                         <div>
-                            <h2 className="text-5xl font-black text-black leading-none uppercase tracking-tight">FEED</h2>
-                            <p className="text-sm font-black text-nile-blue uppercase mt-2 tracking-widest">Connect with your community</p>
+                            <h2 className="text-3xl md:text-5xl font-black text-black leading-none uppercase tracking-tight">FEED</h2>
+                            <p className="text-[10px] md:text-sm font-black text-nile-blue uppercase mt-1 md:mt-2 tracking-widest">Connect with your community</p>
                         </div>
                     </div>
-                    <Button onClick={() => setPostModalOpen(true)} variant="secondary">
+                    <Button onClick={() => setPostModalOpen(true)} variant="secondary" fullWidth className="sm:w-auto">
                         <Plus size={18} strokeWidth={2.5} /> NEW POST
                     </Button>
                 </div>
